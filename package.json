@@ -30,7 +30,6 @@
     "budo": "^8.1.0",
     "semistandard": "^7.0.2",
     "snazzy" : "^3.0.0",
-    "xmlhttprequest": "",
     "eslint": "2.0.0"
   },
   "semistandard": {

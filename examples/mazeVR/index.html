@@ -18,12 +18,20 @@
         <a-mixin id="blue" material="color: #4433AA"></a-mixin>
       </a-assets>
       <a-entity geometry="primitive: plane" material="color: #aaaaaa" scale="100 100 1" rotation="-90 0 0"></a-entity>
-      <a-entity id="camera" camera wasd-controls="acceleration: 300" look-controls position="0 10 2">
-          <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
-            position="0 0 -5"
-            geometry="primitive: ring"
-            material="color: #4CC3D9; shader: flat"
-            scale="0.1, 0.1, 0.1"></a-entity>
+      <a-entity id="camera" camera wasd-controls="acceleration: 300" look-controls position="0 3 2">
+        <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
+          position="0 0 -5"
+          geometry="primitive: ring"
+          material="color: #4CC3D9; shader: flat"
+          scale="0.1, 0.1, 0.1">
+        </a-entity>
+      </a-entity>
+      <a-entity id="vehicle" visible="false">
+        <a-entity geometry="primitive: box; depth: 3; height: 1; width: 1" material="color: #AAAA44"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 0.3" material="color: #999999" position="-0.7 -0.5 1.5"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 0.3" material="color: #999999" position="0.7 -0.5 1.5"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 0.3" material="color: #999999" position="-0.7 -0.5 -1.5"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 0.3" material="color: #999999" position="0.7 -0.5 -1.5"></a-entity>
       </a-entity>
       <a-entity class='enemy' mixin="sphere red" position="-3.5 15 -5">
         <a-animation begin="hovered" attribute="visible" from="true"
@@ -114,6 +122,7 @@
   </body>
 </html>
 <script type="text/javascript">
+var cameraInitPos;
 
 function init() {
   // Note: cube-hovered. '-' means state.
@@ -133,12 +142,46 @@ function init() {
     });
   }
 
+  // Setup vehicle
+  var mainActor = document.querySelector('#vehicle');
+  cameraInitPos = camera.getAttribute('position');
+  updateActor();
+  mainActor.setAttribute('visible', true);
+
+  update();
   requestAnimationFrame(update);
 }
 
+function radianToDegree(rad) {
+  const k = 180 / Math.PI;
+  return rad * k;
+}
+
+function updateActor() {
+  const speed = 0.03;
+  const actorOffsetY = 1.5;
+  var mainActor = document.querySelector('#vehicle');
+  var camera = document.querySelector('#camera');
+  var cameraPos = camera.object3D.position;
+  var cameraRotate = camera.object3D.rotation;
+
+  //1..getAttribute("look-controls");//camera.components['look-controls']; //.getAttribute("look-controls"); // It doesn't work at aframe-core. Have a look at aframe.
+  //2. In fullscreen, the background would be black.
+  var cameraMtx = camera.object3D.matrix.elements;
+  var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
+  lookAtVector.multiplyScalar(1.0); // Add actor in front of the camera
+
+  mainActor.setAttribute('rotation', { x: 0, y: radianToDegree(cameraRotate.y), z: 0 });
+  mainActor.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraInitPos.y - actorOffsetY, z: cameraPos.z + lookAtVector.z });
+
+  // Auto move camera
+  lookAtVector.set(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
+  lookAtVector.multiplyScalar(speed); // Auto move
+  camera.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y, z: cameraPos.z + lookAtVector.z }); 
+}
+
 function update(timeStamp) {
-
-
+  updateActor();
   requestAnimationFrame(update);
 }
 
