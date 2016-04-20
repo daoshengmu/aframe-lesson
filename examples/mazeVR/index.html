@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hit test</title>
+    <meta name="description" content="Hit test - A-Frame">
+    <script src="../../dist/aframe.js"></script>
+    <script src="src/mapGenerator.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <a-mixin id="sphere" geometry="primitive: sphere" scale="1 1 1"></a-mixin>
+        <a-mixin id="sphere-hovered" material="color: yellow; transparent: true; opacity: 0.5" scale="2 2 2" sound="src: asset/hit.wav; autoplay: true">
+        </a-mixin>
+        <a-mixin id="red" material="color: #AA5544"></a-mixin>
+        <a-mixin id="green" material="color: #33AA44"></a-mixin>
+        <a-mixin id="blue" material="color: #4433AA"></a-mixin>
+      </a-assets>
+      <a-entity geometry="primitive: plane" material="color: #aaaaaa" scale="100 100 1" rotation="-90 0 0"></a-entity>
+      <a-entity id="camera" camera wasd-controls="acceleration: 300" look-controls position="0 10 2">
+          <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
+            position="0 0 -5"
+            geometry="primitive: ring"
+            material="color: #4CC3D9; shader: flat"
+            scale="0.1, 0.1, 0.1"></a-entity>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere red" position="-3.5 15 -5">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere green" position="3.5 5 -3">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere blue" position="5.5 10 -3">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere red" position="-7.5 3 -3">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere red" position="-30 15 -40">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere green" position="40 15 -40">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere blue" position="25 5 -45">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere red" position="15 20 -45">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere green" position="-40 10 -20">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere red" position="-40 15 20">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere green" position="0 5 -20">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere blue" position="0 10 20">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere red" position="5 10 10">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere red" position="15 10 5">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere green" position="40 5 -30">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere blue" position="40 20 8">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere green" position="45 10 15">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere red" position="45 5 40">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere blue" position="20 10 40">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere red" position="10 15 40">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-entity class='enemy' mixin="sphere green" position="-30 10 45">
+        <a-animation begin="hovered" attribute="visible" from="true"
+                       to="false" dur="1500"></a-animation>
+      </a-entity>
+      <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+  </body>
+</html>
+<script type="text/javascript">
+
+function init() {
+  // Note: cube-hovered. '-' means state.
+
+  // Generate sphere by script
+  var mapGenerator = new MapGenerator();
+  var scene = document.querySelector('a-scene')
+  mapGenerator.loadMap(scene, 'asset/map.json');
+
+  // Hit and hidden (change color / scale) ==> hide, sound, animation
+  var balls = document.querySelectorAll('.enemy');
+  for (var i = 0; i < balls.length; ++i) {
+    var ball = balls[i];
+    
+    ball.addEventListener('animationend', function() {
+      console.log('event......'); // Trigger physics. Give mass
+    });
+  }
+
+  requestAnimationFrame(update);
+}
+
+function update(timeStamp) {
+
+
+  requestAnimationFrame(update);
+}
+
+window.onload = function() {
+  init();
+}
+
+</script>

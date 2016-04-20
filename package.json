@@ -1,0 +1,42 @@
+{
+  "name": "mazeVR",
+  "version": "0.0.1",
+  "description": "A maze VR game based on A-Frame",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node ./scripts/budo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngokevin/aframe-text-component.git"
+  },
+  "keywords": [
+    "aframe",
+    "aframe-component",
+    "layout",
+    "aframe-vr",
+    "vr",
+    "aframe-layout",
+    "mozvr",
+    "webvr"
+  ],
+  "author": "Kevin Ngo <me@ngokevin.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngokevin/aframe-text-component/issues"
+  },
+  "homepage": "https://github.com/ngokevin/aframe-text-component#readme",
+  "devDependencies": {
+    "budo": "^8.1.0",
+    "semistandard": "^7.0.2",
+    "snazzy" : "^3.0.0",
+    "xmlhttprequest": "",
+    "eslint": "2.0.0"
+  },
+  "semistandard": {
+    "ignore": [
+      "build/**",
+      "dist/**"
+    ]
+  }
+}
