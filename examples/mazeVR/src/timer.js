@@ -2,16 +2,26 @@ var Timer = function (stopTime = 0) {  // endTime: millisecond
   var start = null;
   var elapased = null;
   var endTime = stopTime;
+  var reqId = -1;
+
+  init();
 
   function tick (timestamp) {
-    if (!start) start = timestamp;
+    if (!start) {
+      start = timestamp;
+    }
+
     elapased = Math.floor(timestamp - start);  // Our unit is millisecond.
 
-    window.requestAnimationFrame(tick);
+    if (elapased < 0) {
+      window.cancelAnimationFrame(reqId);
+    } else {
+      reqId = window.requestAnimationFrame(tick);
+    }
   }
 
-  this.init = function () {
-    window.requestAnimationFrame(tick);
+  function init() {
+    reqId = window.requestAnimationFrame(tick);
   };
 
   // Return elapased time in millisecond
