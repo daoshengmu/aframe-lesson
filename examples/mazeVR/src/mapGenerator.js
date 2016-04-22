@@ -1,4 +1,4 @@
-var MapGenerator = function () {
+function MapGenerator () {
   var mapScene = null;
   function loadJSON (url) {
     /*global XMLHttpRequest*/
@@ -16,6 +16,8 @@ var MapGenerator = function () {
 
   function addEntityToScene (entity) {
     var e = document.createElement('a-entity');
+    mapScene.appendChild(e);
+
     e.setAttribute('geometry', {primitive: entity.geometry});
     e.setAttribute('position', {x: entity.position[0],
                                 y: entity.position[1],
@@ -27,7 +29,10 @@ var MapGenerator = function () {
                                 y: entity.rotation[1],
                                 z: entity.rotation[2]});
     e.setAttribute('material', {color: entity.material.color});
-    mapScene.appendChild(e);
+
+    e.setAttribute('physics-body', 'boundingBox', {x: entity.scale[0], y: entity.scale[1], z: entity.scale[2]});
+    e.setAttribute('physics-body', 'mass', 0);
+    e.setAttribute('physics-body', 'velocity', {x: 0.2, y: 0, z: 0});
   }
 
   function parseMap (resultText) {

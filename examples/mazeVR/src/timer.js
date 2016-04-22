@@ -1,4 +1,4 @@
-var Timer = function (stopTime = 0) {  // endTime: millisecond
+function Timer (stopTime) {  // endTime: millisecond
   var start = null;
   var elapased = null;
   var endTime = stopTime;
