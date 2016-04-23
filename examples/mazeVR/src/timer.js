@@ -1,8 +1,10 @@
-function Timer (stopTime) {  // endTime: millisecond
+// stopTime: millisecond
+function Timer (stopTime) {
   var start = null;
   var elapased = null;
   var endTime = stopTime;
   var reqId = -1;
+  var imgSprite = null;
 
   init();
 
@@ -20,9 +22,9 @@ function Timer (stopTime) {  // endTime: millisecond
     }
   }
 
-  function init() {
+  function init () {
     reqId = window.requestAnimationFrame(tick);
-  };
+  }
 
   // Return elapased time in millisecond
   this.getLastTime = function () {

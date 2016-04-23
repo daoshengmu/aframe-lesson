@@ -5,49 +5,55 @@
     <title>Hit test</title>
     <meta name="description" content="Hit test - A-Frame">
     <script src="../../dist/aframe.js"></script>
-    <script src="https://rawgit.com/ngokevin/aframe-text-component/master/dist/aframe-text-component.js"></script>
+<!--     <script src="https://rawgit.com/ngokevin/aframe-text-component/master/dist/aframe-text-component.js"></script> -->
     <script src="../../dist/aframe-physics-component.js"></script>
     <script src="src/mapGenerator.js"></script>
     <script src="src/timer.js"></script>
+    <script src="src/myGame.js"></script>
   </head>
   <body>
     <a-scene stats physics-world="gravity: 0 -9.8 0">
       <a-assets>
-        <a-mixin id="sphere" physics-body="boundingBox: 1 1 1; mass: 3; velocity: 0 0.2 0" geometry="primitive: sphere" scale="1 1 1"></a-mixin>
+        <a-mixin id="sphere" geometry="primitive: sphere; segmentsWidth: 4; segmentsHeight: 4" scale="1 1 1"></a-mixin>
         <a-mixin id="sphere-hovered" material="color: yellow; transparent: true; opacity: 0.5" scale="2 2 2" sound="src: asset/hit.wav; autoplay: true">
         </a-mixin>
         <a-mixin id="red" material="color: #AA5544"></a-mixin>
         <a-mixin id="green" material="color: #33AA44"></a-mixin>
         <a-mixin id="blue" material="color: #4433AA"></a-mixin>
-        <img id="playBtnTexture" src="asset/playButton.png">
         <a-mixin id="menu" geometry="primitive: plane" scale="5 2 1"></a-mixin>
         <a-mixin id="menu-hovered" material="color: #11dd22" scale="7 3 1" sound="src: asset/kick.wav; autoplay: true"></a-mixin>
+        <img id="playBtnTexture" src="asset/gameStart.png">
+        <img id="gameClearBtnTexture" src="asset/gameClear.png">
       </a-assets>
       <a-entity physics-body="boundingBox: 200 2 200; mass: 0; velocity: 0.2 0 0" geometry="primitive: box" material="color: #aa5555" position="0 0 0" scale="100 1 100"></a-entity>
-      <a-entity id="camera" physics-body="boundingBox: 5 5 5; mass: 1; velocity: 0.2 0 0" camera wasd-physics-controls="acceleration: 100" look-controls position="0 10 2">  <!-- Only enable wasd in debug mode -->
+      <a-entity id="camera" physics-body="boundingBox: 5 5 5; mass: 1; velocity: 0.2 0.2 0.2" camera wasd-physics-controls="acceleration: 100" look-controls position="0 10 2">  <!-- Only enable wasd in debug mode -->
         <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
           position="0 0 -5"
-          geometry="primitive: ring"
+          geometry="primitive: ring; segmentsTheta: 8; segmentsPhi: 2"
           material="color: #4CC3D9; shader: flat"
           scale="0.1, 0.1, 0.1">
         </a-entity>
-        <a-entity id="stageClear" material="color: #aa0022" visible="false" text="text: STAGE CLEAN" position="-0.45 0.05 -0.7" scale="0.2 0.2 0.2">
-        </a-entity>
+       <!--  <a-entity id="stageClear" material="color: #aa0022" visible="false" text="text: STAGE CLEAN" position="-0.45 0.05 -0.7" scale="0.2 0.2 0.2">
+        </a-entity> -->
        <!--  <a-entity id="timer" visible="false" material="color: #aadd22" text="text: " position="-0.7 0.3 -1.1" scale="0.1 0.1 0.1">
         </a-entity>
         <a-entity id="scoreBoard" visible="false" material="color: #ee6622" text="text: Score: 0" position="0.7 0.3 -1.1" scale="0.1 0.1 0.1">
         </a-entity> -->
       </a-entity>
-      <a-entity id="playButton" mixin="menu" geometry="primitive: plane" material="transparent: true; src: #playBtnTexture" position="0 10 -5">
-         <a-animation begin="hovered" attribute="visible" from="true" to="false">
-         </a-animation>
+      <a-entity id="playButton" mixin="menu" material="transparent: true; src: #playBtnTexture" position="0 10 -5" scale="0.4 0.2 1.0">
+        <a-animation begin="hovered" attribute="visible" from="true" to="false">
+        </a-animation>
+      </a-entity>
+      <a-entity id="gameClearButton" geometry="primitive: plane" scale="2 1 1" visible="false" material="transparent: true; src: #gameClearBtnTexture" position="0 7 -5" scale="0.4 0.2 1.0">
+        <a-animation begin="hovered" attribute="visible" from="true" to="false">
+        </a-animation>
       </a-entity>
       <a-entity id="vehicle">
         <a-entity geometry="primitive: box; depth: 3; height: 1; width: 1" material="color: #AAAA44"></a-entity>
-        <a-entity geometry="primitive: sphere; radius: 0.3" material="color: #999999" position="-0.7 -0.5 1.5"></a-entity>
-        <a-entity geometry="primitive: sphere; radius: 0.3" material="color: #999999" position="0.7 -0.5 1.5"></a-entity>
-        <a-entity geometry="primitive: sphere; radius: 0.3" material="color: #999999" position="-0.7 -0.5 -1.5"></a-entity>
-        <a-entity geometry="primitive: sphere; radius: 0.3" material="color: #999999" position="0.7 -0.5 -1.5"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 0.3; segmentsWidth: 4; segmentsHeight: 4" material="color: #999999" position="-0.7 -0.5 1.5"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 0.3; segmentsWidth: 4; segmentsHeight: 4" material="color: #999999" position="0.7 -0.5 1.5"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 0.3; segmentsWidth: 4; segmentsHeight: 4" material="color: #999999" position="-0.7 -0.5 -1.5"></a-entity>
+        <a-entity geometry="primitive: sphere; radius: 0.3; segmentsWidth: 4; segmentsHeight: 4" material="color: #999999" position="0.7 -0.5 -1.5"></a-entity>
       </a-entity>
       <a-entity class='enemy' mixin="sphere red" position="-3.5 15 -5">
         <a-animation begin="wait" attribute="visible" from="true"
@@ -61,7 +67,7 @@
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="1500"></a-animation>
       </a-entity>
-      <a-entity class='enemy' mixin="sphere red" position="-7.5 3 -3">
+      <!-- <a-entity class='enemy' mixin="sphere red" position="-7.5 3 -3">
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="1500"></a-animation>
       </a-entity>
@@ -132,167 +138,171 @@
       <a-entity class='enemy' mixin="sphere green" position="-30 10 45">
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="1500"></a-animation>
-      </a-entity>
-      <a-sky color="#ECECEC"></a-sky>
+      </a-entity> -->
+      <!-- <a-sky color="#ECECEC"></a-sky> -->
     </a-scene>
   </body>
 </html>
 <script type="text/javascript">
-var timer;
-var bGameStart = false;
-var totalBallNum = 0;
-var score = 0;
-const gameTime = 10 * 60 * 1000; // 10 mins
+// var timer;
+// var bGameStart = false;
+// var totalBallNum = 0;
+// var score = 0;
+// const gameTime = 10 * 60 * 1000; // 10 mins
+var myGame = null;
+
 
 // To do remove hovered event at init stage, and in-game add them.
 function init() {
-  // Note: cube-hovered. '-' means state.
+  // // Note: cube-hovered. '-' means state.
 
-  // Generate sphere by script
-  var mapGenerator = new MapGenerator();
-  var scene = document.querySelector('a-scene')
-  mapGenerator.loadMap(scene, 'asset/map.json');
+  // // Generate sphere by script
+  // var mapGenerator = new MapGenerator();
+  // var scene = document.querySelector('a-scene')
+  // mapGenerator.loadMap(scene, 'asset/map.json');
 
-  // Hit and hidden (change color / scale) ==> hide, sound, animation
-  var balls = document.querySelectorAll('.enemy');
-  totalBallNum = balls.length;
-  for (var i = 0; i < totalBallNum; ++i) {
-    var ball = balls[i];
-    // beginContact event for phyics contact floor.
-    ball.addEventListener('animationend', function() {
-      console.log('event......'); // Trigger physics. Give mass
-      score += 100;
-      ball.setAttribute('physics-body', 'mass', 3);
-      // var scoreBoard = document.querySelector('#scoreBoard');
-      // scoreBoard.setAttribute('text', 'text', 'Score: ' + score);
+  // // Hit and hidden (change color / scale) ==> hide, sound, animation
+  // var balls = document.querySelectorAll('.enemy');
+  // totalBallNum = balls.length;
+  // for (var i = 0; i < totalBallNum; ++i) {
+  //   var ball = balls[i];
+  //   // beginContact event for phyics contact floor.
+  //   ball.addEventListener('animationend', function() {
+  //     console.log('event......'); // Trigger physics. Give mass
+  //     score += 100;
+  //     //ball.setAttribute('physics-body', 'mass', 3);
+  //     // var scoreBoard = document.querySelector('#scoreBoard');
+  //     // scoreBoard.setAttribute('text', 'text', 'Score: ' + score);
 
-      if (score == totalBallNum * 100) {
-        var stageClear = document.querySelector('#stageClear');
-        stageClear.setAttribute('visible', true);
-        bGameStart = false;
-      }
-    });
-  }
+  //     if (score == totalBallNum * 100) {
+  //       var stageClear = document.querySelector('#stageClear');
+  //       stageClear.setAttribute('visible', true);
+  //       bGameStart = false;
+  //     }
+  //   });
+  // }
 
-  gameStop();
+  // gameStop();
 
-  // Stage 0: Play game UI
-  var playBtn = document.querySelector('#playButton');
-  playBtn.addEventListener('animationend', function() {
-    this.gameStart();
-  }.bind(this), false);
+  // // Stage 0: Play game UI
+  // var playBtn = document.querySelector('#playButton');
+  // playBtn.addEventListener('animationend', function() {
+  //   this.gameStart();
+  // }.bind(this), false);
 
-  //showGUI();
+  // //showGUI();
 
-  // Initial timer
-  timer = new Timer(gameTime); // 3 mins
+  // // Initial timer
+  // timer = new Timer(gameTime); // 3 mins
 
   // Hit point.
+  myGame = new MyGame();
+  myGame.init();
 
   update();
-  requestAnimationFrame(update);
 }
 
-function radianToDegree(rad) {
-  const k = 180 / Math.PI;
-  return rad * k;
-}
+// function radianToDegree(rad) {
+//   const k = 180 / Math.PI;
+//   return rad * k;
+// }
 
-function showGUI() {
-  if (!bGameStart) {
-    gameStop();
-  }
-}
+// function showGUI() {
+//   if (!bGameStart) {
+//     gameStop();
+//   }
+// }
 
-function gameStart() {
-  bGameStart = true;
-  score = 0;
+// function gameStart() {
+//   bGameStart = true;
+//   score = 0;
 
-  timer = new Timer(gameTime); // 3 mins
-  var stageClear = document.querySelector('#stageClear');
-  stageClear.setAttribute('visible', false);
+//   timer = new Timer(gameTime); // 3 mins
+//   var stageClear = document.querySelector('#stageClear');
+//   stageClear.setAttribute('visible', false);
 
-  var balls = document.querySelectorAll('.enemy');
-  totalBallNum = balls.length;
-  for (var i = 0; i < totalBallNum; ++i) {
-    var ball = balls[i];
-    ball.lastElementChild.data.begin = 'hovered';
-  }
-}
+//   var balls = document.querySelectorAll('.enemy');
+//   totalBallNum = balls.length;
+//   for (var i = 0; i < totalBallNum; ++i) {
+//     var ball = balls[i];
+//     ball.lastElementChild.data.begin = 'hovered';
+//   }
+// }
 
-function gameStop() {
-  var playBtn = document.querySelector('#playButton');
-  var camera = document.querySelector('#camera');
-  var cameraPos = camera.object3D.position;
-  var cameraRotate = camera.object3D.rotation;
-  var cameraMtx = camera.object3D.matrix.elements;
-  var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
-  lookAtVector.multiplyScalar(1.0); // Add actor in front of the camera
-  const fixedHeight = 0.3;
+// function gameStop() {
+//   var playBtn = document.querySelector('#playButton');
+//   var camera = document.querySelector('#camera');
+//   var cameraPos = camera.object3D.position;
+//   var cameraRotate = camera.object3D.rotation;
+//   var cameraMtx = camera.object3D.matrix.elements;
+//   var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
+//   lookAtVector.multiplyScalar(1.0); // Add actor in front of the camera
+//   const fixedHeight = 0.3;
 
-  playBtn.setAttribute('rotation', { x: radianToDegree(cameraRotate.x), y: radianToDegree(cameraRotate.y), z: radianToDegree(cameraRotate.z) });
-  playBtn.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y + fixedHeight, z: cameraPos.z + lookAtVector.z });
-  playBtn.setAttribute('scale', { x: 0.4, y: 0.2, z: 1.0 });
-  playBtn.setAttribute('visible', true);
+//   playBtn.setAttribute('rotation', { x: radianToDegree(cameraRotate.x), y: radianToDegree(cameraRotate.y), z: radianToDegree(cameraRotate.z) });
+//   playBtn.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y + fixedHeight, z: cameraPos.z + lookAtVector.z });
+//   playBtn.setAttribute('scale', { x: 0.4, y: 0.2, z: 1.0 });
+//   playBtn.setAttribute('visible', true);
 
-  var balls = document.querySelectorAll('.enemy');
-  totalBallNum = balls.length;
-  for (var i = 0; i < totalBallNum; ++i) {
-    var ball = balls[i];
-    ball.lastElementChild.data.begin = 'wait';
-  }
-}
+//   var balls = document.querySelectorAll('.enemy');
+//   totalBallNum = balls.length;
+//   for (var i = 0; i < totalBallNum; ++i) {
+//     var ball = balls[i];
+//     ball.lastElementChild.data.begin = 'wait';
+//   }
+// }
 
-function updateActor() {
-  var speed = 0.0;
-  const actorOffsetY = 1.5;
-  var mainActor = document.querySelector('#vehicle');
-  var camera = document.querySelector('#camera');
-  var cameraPos = camera.object3D.position;
-  var cameraRotate = camera.object3D.rotation;
+// function updateActor() {
+//   var speed = 0.0;
+//   const actorOffsetY = 1.5;
+//   var mainActor = document.querySelector('#vehicle');
+//   var camera = document.querySelector('#camera');
+//   var cameraPos = camera.object3D.position;
+//   var cameraRotate = camera.object3D.rotation;
 
-  if (bGameStart)
-    speed = 0.3;
+//   if (bGameStart)
+//     speed = 0.3;
 
-  //1..getAttribute("look-controls");//camera.components['look-controls']; //.getAttribute("look-controls"); // It doesn't work at aframe-core. Have a look at aframe.
-  //2. In fullscreen, the background would be black.
-  var cameraMtx = camera.object3D.matrix.elements;
-  var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
-  lookAtVector.multiplyScalar(1.0); // Add actor in front of the camera
+//   //1..getAttribute("look-controls");//camera.components['look-controls']; //.getAttribute("look-controls"); // It doesn't work at aframe-core. Have a look at aframe.
+//   //2. In fullscreen, the background would be black.
+//   var cameraMtx = camera.object3D.matrix.elements;
+//   var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
+//   lookAtVector.multiplyScalar(1.0); // Add actor in front of the camera
 
-  mainActor.setAttribute('rotation', { x: 0, y: radianToDegree(cameraRotate.y), z: 0 });
-  mainActor.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y +lookAtVector.y - actorOffsetY, z: cameraPos.z + lookAtVector.z });
+//   mainActor.setAttribute('rotation', { x: 0, y: radianToDegree(cameraRotate.y), z: 0 });
+//   mainActor.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y +lookAtVector.y - actorOffsetY, z: cameraPos.z + lookAtVector.z });
 
-  // Auto move camera
-  lookAtVector.set(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
-  lookAtVector.multiplyScalar(speed); // Auto move
+//   // Auto move camera
+//   // lookAtVector.set(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
+//   // lookAtVector.multiplyScalar(speed); // Auto move
 
-  if (bGameStart) {
-     var wasd = camera.components['wasd-physics-controls'];
-     wasd.keys[87] = true; //press 'W' key;
-  }
-}
+//   if (bGameStart) {
+//     var wasd = camera.components['wasd-physics-controls'];
+//     wasd.keys[87] = true; //press 'W' key;
+//   }
+// }
 
-function updateTimer() {
-  if (bGameStart && timer) {
-    var lastTime = timer.getLastTime();
-    var timerEntity = document.querySelector('#timer');
+// function updateTimer() {
+//   if (bGameStart && timer) {
+//     var lastTime = timer.getLastTime();
+//     var timerEntity = document.querySelector('#timer');
 
-    // if (lastTime > 0) {
-    //   timerEntity.setAttribute('text', 'text', timer.getFormatedLastTime());
-    // } else {
-    //   timerEntity.setAttribute('text', 'text', 'Stop');
-    //  var playBtn = document.querySelector('#playButton');
-    //  playBtn.setAttribute('visible', true);
-    //  bGameStart = false;
-    // }
-  }
-}
+//     // if (lastTime > 0) {
+//     //   timerEntity.setAttribute('text', 'text', timer.getFormatedLastTime());
+//     // } else {
+//     //   timerEntity.setAttribute('text', 'text', 'Stop');
+//     //  var playBtn = document.querySelector('#playButton');
+//     //  playBtn.setAttribute('visible', true);
+//     //  bGameStart = false;
+//     // }
+//   }
+// }
 
 function update(timeStamp) {
-  showGUI();
-  updateActor();
-  updateTimer();
+  // showGUI();
+  // updateActor();
+  // updateTimer();
+  myGame.update();
   requestAnimationFrame(update);
 }
 

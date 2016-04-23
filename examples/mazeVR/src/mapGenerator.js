@@ -58,6 +58,6 @@ function MapGenerator () {
     mapScene = scene;
     loadJSON(url);
   };
-};
+}
 
 MapGenerator();
