@@ -8,47 +8,52 @@
 <!--     <script src="https://rawgit.com/ngokevin/aframe-text-component/master/dist/aframe-text-component.js"></script> -->
     <script src="../../dist/aframe-physics-component.js"></script>
     <script src="src/mapGenerator.js"></script>
-    <script src="src/timer.js"></script>
+    <script src="src/stopWatch.js"></script>
     <script src="src/myGame.js"></script>
   </head>
   <body>
     <a-scene stats physics-world="gravity: 0 -9.8 0">
       <a-assets>
+        <img id="playBtnTexture" src="asset/gameStart.png">
+        <img id="gameClearBtnTexture" src="asset/gameClear.png">
+        <img id="stopWatchTexture" src="asset/numstrip.png">
         <a-mixin id="sphere" geometry="primitive: sphere; segmentsWidth: 4; segmentsHeight: 4" scale="1 1 1"></a-mixin>
         <a-mixin id="sphere-hovered" material="color: yellow; transparent: true; opacity: 0.5" scale="2 2 2" sound="src: asset/hit.wav; autoplay: true">
         </a-mixin>
         <a-mixin id="red" material="color: #AA5544"></a-mixin>
         <a-mixin id="green" material="color: #33AA44"></a-mixin>
         <a-mixin id="blue" material="color: #4433AA"></a-mixin>
+        <a-mixin id="clock" geometry="primitive: plane" visible="true" material="transparent: true; src: #stopWatchTexture"></a-mixin>
         <a-mixin id="menu" geometry="primitive: plane" scale="5 2 1"></a-mixin>
         <a-mixin id="menu-hovered" material="color: #11dd22" scale="7 3 1" sound="src: asset/kick.wav; autoplay: true"></a-mixin>
-        <img id="playBtnTexture" src="asset/gameStart.png">
-        <img id="gameClearBtnTexture" src="asset/gameClear.png">
       </a-assets>
       <a-entity physics-body="boundingBox: 200 2 200; mass: 0; velocity: 0.2 0 0" geometry="primitive: box" material="color: #aa5555" position="0 0 0" scale="100 1 100"></a-entity>
-      <a-entity id="camera" physics-body="boundingBox: 5 5 5; mass: 1; velocity: 0.2 0.2 0.2" camera wasd-physics-controls="acceleration: 100" look-controls position="0 10 2">  <!-- Only enable wasd in debug mode -->
+      <a-entity id="camera" wasd-controls  camera look-controls position="0 10 2">  <!-- Only enable wasd in debug mode -->
         <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
           position="0 0 -5"
           geometry="primitive: ring; segmentsTheta: 8; segmentsPhi: 2"
           material="color: #4CC3D9; shader: flat"
           scale="0.1, 0.1, 0.1">
         </a-entity>
-       <!--  <a-entity id="stageClear" material="color: #aa0022" visible="false" text="text: STAGE CLEAN" position="-0.45 0.05 -0.7" scale="0.2 0.2 0.2">
-        </a-entity> -->
-       <!--  <a-entity id="timer" visible="false" material="color: #aadd22" text="text: " position="-0.7 0.3 -1.1" scale="0.1 0.1 0.1">
-        </a-entity>
-        <a-entity id="scoreBoard" visible="false" material="color: #ee6622" text="text: Score: 0" position="0.7 0.3 -1.1" scale="0.1 0.1 0.1">
-        </a-entity> -->
       </a-entity>
       <a-entity id="playButton" mixin="menu" material="transparent: true; src: #playBtnTexture" position="0 10 -5" scale="0.4 0.2 1.0">
         <a-animation begin="hovered" attribute="visible" from="true" to="false">
         </a-animation>
       </a-entity>
-      <a-entity id="gameClearButton" geometry="primitive: plane" scale="2 1 1" visible="false" material="transparent: true; src: #gameClearBtnTexture" position="0 7 -5" scale="0.4 0.2 1.0">
+      <a-entity id="gameClearButton" geometry="primitive: plane" scale="2 1 1" visible="false" material="transparent: true; src: #gameClearBtnTexture" position="0 7 -5">
         <a-animation begin="hovered" attribute="visible" from="true" to="false">
         </a-animation>
       </a-entity>
-      <a-entity id="vehicle">
+      <a-entity id="stopWatch" position="0 10 -5" scale="1 1 1.0">
+        <a-entity id="min0" mixin="clock" position="-3 0 0"></a-entity>
+        <a-entity id="min1" mixin="clock" position="-2 0 0"></a-entity>
+        <a-entity id="sec0" mixin="clock" position="0 0 0"></a-entity>
+        <a-entity id="sec1" mixin="clock" position="1 0 0"></a-entity>
+        <a-entity id="msec0" mixin="clock" position="3 0 0"></a-entity>
+        <a-entity id="msec1" mixin="clock" position="4 0 0"></a-entity>
+        <a-entity id="msec3" mixin="clock" position="5 0 0"></a-entity>
+      </a-entity>
+      <a-entity id="vehicle" physics-body="boundingBox: 2 2 3; mass: 10; velocity: 0.2 0.2 0.2" wasd-physics-controls="acceleration: 100">
         <a-entity geometry="primitive: box; depth: 3; height: 1; width: 1" material="color: #AAAA44"></a-entity>
         <a-entity geometry="primitive: sphere; radius: 0.3; segmentsWidth: 4; segmentsHeight: 4" material="color: #999999" position="-0.7 -0.5 1.5"></a-entity>
         <a-entity geometry="primitive: sphere; radius: 0.3; segmentsWidth: 4; segmentsHeight: 4" material="color: #999999" position="0.7 -0.5 1.5"></a-entity>

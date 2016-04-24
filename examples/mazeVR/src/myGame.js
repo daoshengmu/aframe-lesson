@@ -5,17 +5,14 @@ function MyGame () {
   var score = 0;
   var bStart = false;
   var bFinish = false;
-  var timer = new Timer();
+  var stopWatch = new StopWatch();
   var totalBall = 0;
-  const gameTime = 3 * 60 * 1000; // 3 mins
 
   function ballHit (e) {
     console.log('Ball hit......');
     score += 100;
 
     if (score === totalBall * 100) {
-      // var stageClear = document.querySelector('#stageClear');
-      // stageClear.setAttribute('visible', true);
       bStart = false; // Finish the game.
       bFinish = true;
       console.log('Game is finished...');
@@ -35,7 +32,7 @@ function MyGame () {
     var gameClearBtn = document.querySelector('#gameClearButton');
     gameClearBtn.setAttribute('visible', false);
 
-    timer = new Timer(gameTime);
+    stopWatch = new StopWatch();
 
     // While game start, give hovered animation.
     var balls = document.querySelectorAll('.enemy');
@@ -108,8 +105,10 @@ function MyGame () {
     }
   }
 
-  function updateTimer () {
-
+  function updateTime () {
+    if (stopWatch) {
+      stopWatch.showElapsedTime();
+    }
   }
 
   this.init = function () {
@@ -135,7 +134,7 @@ function MyGame () {
   this.update = function () {
     showGUI();
     updateActor();
-    updateTimer();
+    updateTime();
   };
 }
 
