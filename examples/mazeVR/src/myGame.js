@@ -5,11 +5,11 @@ function MyGame () {
   var score = 0;
   var bStart = false;
   var bFinish = false;
-  var stopWatch = new StopWatch();
   var totalBall = 0;
+  var stopWatch = null;
 
   function ballHit (e) {
-    console.log('Ball hit......');
+    console.log('Ball is hit......');
     score += 100;
 
     if (score === totalBall * 100) {
@@ -30,7 +30,9 @@ function MyGame () {
     score = 0;
 
     var gameClearBtn = document.querySelector('#gameClearButton');
+    var stopWatchItem = document.querySelector('#stopWatch');
     gameClearBtn.setAttribute('visible', false);
+    stopWatchItem.setAttribute('visible', false);
 
     stopWatch = new StopWatch();
 
@@ -44,28 +46,17 @@ function MyGame () {
   }
 
   function gameStop () {
-    // Make playbutton face to the camera
     var playBtn = document.querySelector('#playButton');
     var gameClearBtn = document.querySelector('#gameClearButton');
-    var camera = document.querySelector('#camera');
-    var cameraPos = camera.object3D.position;
-    var cameraRotate = camera.object3D.rotation;
-    var cameraMtx = camera.object3D.matrix.elements;
-    var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
-    const fixedHeight = 0.3;
-    const fixedHeight1 = 0.6;
+    var stopWatchItem = document.querySelector('#stopWatch');
 
-    lookAtVector.multiplyScalar(1.0); // Add actor in front of the camera
-    playBtn.setAttribute('rotation', { x: radianToDegree(cameraRotate.x), y: radianToDegree(cameraRotate.y), z: radianToDegree(cameraRotate.z) });
-    playBtn.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y + fixedHeight, z: cameraPos.z + lookAtVector.z });
-    // playBtn.setAttribute('scale', { x: 0.4, y: 0.2, z: 1.0 });
-    playBtn.setAttribute('visible', true);
+    if (stopWatch)
+      stopWatch.stopTime();
 
     if (bFinish) {
-      gameClearBtn.setAttribute('rotation', { x: radianToDegree(cameraRotate.x), y: radianToDegree(cameraRotate.y), z: radianToDegree(cameraRotate.z) });
-      gameClearBtn.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y + fixedHeight1, z: cameraPos.z + lookAtVector.z });
-      // gameClearBtn.setAttribute('scale', { x: 0.4, y: 0.2, z: 1.0 });
       gameClearBtn.setAttribute('visible', true);
+      stopWatchItem.setAttribute('visible', true);
+      playBtn.setAttribute('visible', true);
     }
 
     // While game stop, remove hovered animation.
@@ -79,6 +70,7 @@ function MyGame () {
 
   function updateActor () {
     const actorOffsetY = 1.5;
+    const lookScale = 0.6;
     var mainActor = document.querySelector('#vehicle');
     var camera = document.querySelector('#camera');
     var cameraPos = camera.object3D.position;
@@ -88,18 +80,59 @@ function MyGame () {
     // 2. In fullscreen, the background would be black.
     var cameraMtx = camera.object3D.matrix.elements;
     var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
-    lookAtVector.multiplyScalar(1.0); // Add actor in front of the camera
+    lookAtVector.multiplyScalar(lookScale); // Add actor in front of the camera
 
     mainActor.setAttribute('rotation', { x: 0, y: radianToDegree(cameraRotate.y), z: 0 });
-    mainActor.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y + lookAtVector.y - actorOffsetY, z: cameraPos.z + lookAtVector.z });
+    mainActor.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y - actorOffsetY, z: cameraPos.z + lookAtVector.z });
 
     if (bStart) {
       var wasd = camera.components['wasd-physics-controls'];
-      //wasd.keys[87] = true; // press 'W' key;
+      wasd.keys[87] = true; // press 'W' key;
     }
   }
 
-  function showGUI () {
+  function updateGUI () {
+    const offsetPlayBtn = new THREE.Vector3(0, 0.2, 0);
+    const offsetStopWatch = new THREE.Vector3(-0.1, -0.2, 0);
+    const offsetGameClear = new THREE.Vector3(0, 0.0, 0);
+    var menus = document.querySelectorAll('.menu');
+    var camera = document.querySelector('#camera').object3D;
+    var cameraPos = camera.position;
+    var cameraRotate = camera.rotation;
+    var cameraMtx = camera.matrix.elements;
+    var offset = null;
+    var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
+    lookAtVector.multiplyScalar(1.0);
+
+    for (var i = 0; i < menus.length; ++i) {
+      var entity = menus[i];
+  
+      if (entity.getAttribute('visible')) {
+        // Update transform
+        // Make face to the camera
+        entity.setAttribute('rotation', { x: radianToDegree(cameraRotate.x)
+                          , y: radianToDegree(cameraRotate.y), z: radianToDegree(cameraRotate.z) });
+
+        switch(entity.id) {
+          case 'playButton':
+            offset = offsetPlayBtn;
+            break;
+          case 'stopWatch':
+            offset = offsetStopWatch;
+            break;
+          case 'gameClearButton':
+            offset = offsetGameClear;
+            break;
+          default:
+            console.log('This gui type is undefined ' + entity.id);
+            break;
+        }
+
+        entity.setAttribute('position', { x: cameraPos.x + lookAtVector.x + offset.x, y: cameraPos.y + offset.y
+                          , z: cameraPos.z + lookAtVector.z + offset.z });
+      }
+    }
+
     if (!bStart) {
       gameStop();
     }
@@ -132,7 +165,7 @@ function MyGame () {
   };
 
   this.update = function () {
-    showGUI();
+    updateGUI();
     updateActor();
     updateTime();
   };
