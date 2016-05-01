@@ -32,10 +32,10 @@ function MyGame () {
     var gameClearBtn = document.querySelector('#gameClearButton');
     var stopWatchItem = document.querySelector('#stopWatch');
     gameClearBtn.setAttribute('visible', false);
-    stopWatchItem.setAttribute('visible', false);
+    // stopWatchItem.setAttribute('visible', false);
 
     stopWatch = new StopWatch();
-
+    stopWatch.init();
     // While game start, give hovered animation.
     var balls = document.querySelectorAll('.enemy');
     totalBall = balls.length;
@@ -140,7 +140,7 @@ function MyGame () {
 
   function updateTime () {
     if (stopWatch) {
-      stopWatch.showElapsedTime();
+      stopWatch.showElapsedTime(document.querySelector('#stopWatch'));
     }
   }
 

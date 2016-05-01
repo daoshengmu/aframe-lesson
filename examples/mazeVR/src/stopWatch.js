@@ -2,26 +2,14 @@
 function StopWatch () {
   var start = null;
   var elapased = 0;
-  var reqId = -1;
-  var imgSprite = null;
-
-  init();
+  var reqId;
 
   function tick (timestamp) {
     if (!start) {
       start = timestamp;
     }
-
+    
     elapased = Math.floor(timestamp - start);
-
-    if (elapased < 0) {
-      window.cancelAnimationFrame(reqId);
-    } else {
-      reqId = window.requestAnimationFrame(tick);
-    }
-  }
-
-  function init () {
     reqId = window.requestAnimationFrame(tick);
   }
 
@@ -32,6 +20,14 @@ function StopWatch () {
         [ offset, 1, offset + 0.1, 1, offset, 0, offset + 0.1, 0 ]
       );
   }
+
+  this.init = function () {
+    reqId = window.requestAnimationFrame(tick);
+  };
+
+  this.stop = function () {
+    window.cancelAnimationFrame(reqId);
+  };
 
   // Return elapased time in millisecond
   this.getElapsedTime = function () {
@@ -52,9 +48,9 @@ function StopWatch () {
     return result;
   };
 
-  this.showElapsedTime = function () {
-    var items = document.querySelector('#stopWatch').children;
-    var elapsedTime = getFormatedElapsedTime();
+  this.showElapsedTime = function (stopWatchItem) {
+    var items = stopWatchItem.children;
+    var elapsedTime = this.getFormatedElapsedTime();
 
     // mm mm:ss ss:ms ms ms
     var t = 0;
