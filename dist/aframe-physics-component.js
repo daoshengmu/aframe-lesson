@@ -122,7 +122,11 @@
 	  schema: {
 	    angularVelocity: { type: 'vec3' },
 	    angularDamping: { default: 0.01 },
-	    boundingBox: { type: 'vec3' },
+	    primitive: {
+	      default: 'box',
+	      oneOf: ['box', 'sphere'] },
+	    boundingSphere: { default: 1, if: { primitive: ['sphere'] } },
+	    boundingBox: { type: 'vec3', if: { primitive: ['box'] } },
 	    linearDamping: { default: 0.01 },
 	    mass: { default: 1 },
 	    velocity: { type: 'vec3' }
@@ -178,10 +182,27 @@
 	  },
 
 	  getBody: function (el, data) {
-	    var boundingBox = data.boundingBox;
 	    var position = el.getAttribute('position');
 	    var angularVelocity = data.angularVelocity;
 	    var velocity = data.velocity;
+	    var shape = null; 
+
+	    switch (data.primitive) {
+	      case 'box': {
+	        var boundingBox = data.boundingBox;
+	        shape = new CANNON.Box(new CANNON.Vec3(boundingBox.x / 2, boundingBox.y / 2,
+	                                            boundingBox.z / 2));
+	        break;
+	      }
+	      case 'sphere': {
+	        var radius = data.boundingSphere;
+	        shape = new CANNON.Sphere(radius);
+	        break;
+	      }
+	      default:
+	        console('This type in aframe-physics not yet support. ' + data.primitive);
+	        break;
+	    }
 
 	    var bodyProperties = {
 	      angularDamping: data.angularDamping,
@@ -190,8 +211,7 @@
 	      linearDamping: data.linearDamping,
 	      mass: data.mass,
 	      position: new CANNON.Vec3(position.x, position.y, position.z),
-	      shape: new CANNON.Box(new CANNON.Vec3(boundingBox.x / 2, boundingBox.y / 2,
-	                                            boundingBox.z / 2)),
+	      shape: shape,
 	      velocity: new CANNON.Vec3(velocity.x, velocity.y, velocity.z)
 	    };
 
