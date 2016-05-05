@@ -1,4 +1,5 @@
-function MapGenerator () {
+
+var MapGenerator = function () {
   var mapScene = null;
   function loadJSON (url) {
     /*global XMLHttpRequest*/
@@ -58,6 +59,4 @@ function MapGenerator () {
     mapScene = scene;
     loadJSON(url);
   };
-}
-
-MapGenerator();
+};

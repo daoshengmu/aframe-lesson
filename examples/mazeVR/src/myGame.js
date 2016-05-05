@@ -1,7 +1,5 @@
-// var timer = require('./timer.js');
-// var mapGenerator1 = require('./mapGenerator');
 
-function MyGame () {
+var MyGame = function () {
   var score = 0;
   var bStart = false;
   var bFinish = false;
@@ -30,9 +28,7 @@ function MyGame () {
     score = 0;
 
     var gameClearBtn = document.querySelector('#gameClearButton');
-    var stopWatchItem = document.querySelector('#stopWatch');
     gameClearBtn.setAttribute('visible', false);
-    // stopWatchItem.setAttribute('visible', false);
 
     stopWatch = new StopWatch();
     stopWatch.init();
@@ -49,9 +45,10 @@ function MyGame () {
     var playBtn = document.querySelector('#playButton');
     var gameClearBtn = document.querySelector('#gameClearButton');
     var stopWatchItem = document.querySelector('#stopWatch');
-
-    if (stopWatch)
-      stopWatch.stopTime();
+    console.log('gameStop');
+    if (stopWatch) {
+      stopWatch.stop();
+    }
 
     if (bFinish) {
       gameClearBtn.setAttribute('visible', true);
@@ -106,14 +103,14 @@ function MyGame () {
 
     for (var i = 0; i < menus.length; ++i) {
       var entity = menus[i];
-  
+
       if (entity.getAttribute('visible')) {
         // Update transform
         // Make face to the camera
-        entity.setAttribute('rotation', { x: radianToDegree(cameraRotate.x)
-                          , y: radianToDegree(cameraRotate.y), z: radianToDegree(cameraRotate.z) });
+        entity.setAttribute('rotation', { x: radianToDegree(cameraRotate.x),
+          y: radianToDegree(cameraRotate.y), z: radianToDegree(cameraRotate.z) });
 
-        switch(entity.id) {
+        switch (entity.id) {
           case 'playButton':
             offset = offsetPlayBtn;
             break;
@@ -128,8 +125,8 @@ function MyGame () {
             break;
         }
 
-        entity.setAttribute('position', { x: cameraPos.x + lookAtVector.x + offset.x, y: cameraPos.y + offset.y
-                          , z: cameraPos.z + lookAtVector.z + offset.z });
+        entity.setAttribute('position', { x: cameraPos.x + lookAtVector.x + offset.x, y: cameraPos.y + offset.y,
+          z: cameraPos.z + lookAtVector.z + offset.z });
       }
     }
 
@@ -169,6 +166,4 @@ function MyGame () {
     updateActor();
     updateTime();
   };
-}
-
-MyGame();
+};

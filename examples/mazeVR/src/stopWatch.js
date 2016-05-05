@@ -1,35 +1,39 @@
-// StopTime: unit in millisecond
-function StopWatch () {
+
+var StopWatch = function () {
   var start = null;
   var elapased = 0;
-  var reqId;
+  var reqId = null;
 
   function tick (timestamp) {
     if (!start) {
       start = timestamp;
     }
-    
+
     elapased = Math.floor(timestamp - start);
     reqId = window.requestAnimationFrame(tick);
+    // console.log('emit tick...', reqId, timestamp);
   }
 
-  function getTexCoord(num) {
+  function getTexCoord (num) {
     var offset = num * 0.1;
 
     return new Float32Array(
-        [ offset, 1, offset + 0.1, 1, offset, 0, offset + 0.1, 0 ]
-      );
+      [ offset, 1, offset + 0.1, 1, offset, 0, offset + 0.1, 0 ]);
   }
 
   this.init = function () {
+    console.log('init');
     reqId = window.requestAnimationFrame(tick);
   };
 
   this.stop = function () {
-    window.cancelAnimationFrame(reqId);
+    if (reqId) {
+      window.cancelAnimationFrame(reqId);
+      reqId = null;
+    }
+    console.log('emit stop...', reqId);
   };
 
-  // Return elapased time in millisecond
   this.getElapsedTime = function () {
     return elapased;
   };
@@ -39,7 +43,7 @@ function StopWatch () {
     var ms = elapased - sec * 1000;
     var minute = Math.floor(sec / 60);
     var result = {};
-    
+
     sec = sec - minute * 60;
     result['min'] = minute;
     result['sec'] = sec;
@@ -60,7 +64,7 @@ function StopWatch () {
     var t0, t1, t2, t3, t4, t5, t6;
 
     for (var i = 0; i < items.length; i++) {
-      switch(i) {
+      switch (i) {
         case 0:
           t0 = Math.floor(elapsedTime['min'] / 10);
           t = t0;
@@ -94,10 +98,7 @@ function StopWatch () {
       item = items['' + i];
       newTexCoord = getTexCoord(t);
       geometry = item.object3DMap.mesh.geometry;
-      geometry.addAttribute('uv', new THREE.BufferAttribute( newTexCoord, 2 ));
+      geometry.addAttribute('uv', new THREE.BufferAttribute(newTexCoord, 2));
     }
   };
 };
-
-StopWatch();
-

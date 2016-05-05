@@ -18,7 +18,8 @@
     "vr",
     "aframe-layout",
     "mozvr",
-    "webvr"
+    "webvr",
+    "mazevr"
   ],
   "author": "Kevin Ngo <me@ngokevin.com>",
   "license": "MIT",
@@ -28,15 +29,18 @@
   "homepage": "https://github.com/ngokevin/aframe-text-component#readme",
   "devDependencies": {
     "budo": "^8.1.0",
+    "browserify": "^11.0.1",
+    "exorcist": "^0.4.0",
     "semistandard": "^7.0.2",
     "snazzy" : "^3.0.0",
-    "eslint": "2.0.0"
+    "three": "^0.75.0",
+    "uglifyjs": "^2.4.10"
   },
   "semistandard": {
     "ignore": [
       "build/**",
       "dist/**",
-      "examples/mazeVR/src"
+      "examples/mazevr.js"
     ]
   }
 }

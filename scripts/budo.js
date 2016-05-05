@@ -11,9 +11,9 @@ function execCmd (cmd) {
 }
 
 var consts = {
-  NAME: 'AFRAME',
+  NAME: 'MAZEVR',
   WATCH: 'examples/**/*',  // Additional files to watch for LiveReload
-  ENTRY: 'examples/index.js',
+  ENTRY: 'examples/main.js',
   PORT: 9005
 };
 
@@ -31,7 +31,7 @@ var opts = {
   }
 };
 
-var app = budo(consts.ENTRY + ':' + consts.BUILD, opts);
+var app = budo(consts.ENTRY, opts);
 app.on('update', function () {
-  execCmd('semistandard -v | snazzy');
+ // execCmd('semistandard -v | snazzy');
 });
