@@ -11,7 +11,6 @@ var StopWatch = function () {
 
     elapased = Math.floor(timestamp - start);
     reqId = window.requestAnimationFrame(tick);
-    // console.log('emit tick...', reqId, timestamp);
   }
 
   function getTexCoord (num) {
@@ -28,10 +27,11 @@ var StopWatch = function () {
 
   this.stop = function () {
     if (reqId) {
-      window.cancelAnimationFrame(reqId);
-      reqId = null;
+      setTimeout(function() { 
+        window.cancelAnimationFrame(reqId);
+        reqId = null;
+      }, 1);
     }
-    console.log('emit stop...', reqId);
   };
 
   this.getElapsedTime = function () {

@@ -45,6 +45,7 @@ var MyGame = function () {
     var playBtn = document.querySelector('#playButton');
     var gameClearBtn = document.querySelector('#gameClearButton');
     var stopWatchItem = document.querySelector('#stopWatch');
+
     console.log('gameStop');
     if (stopWatch) {
       stopWatch.stop();
