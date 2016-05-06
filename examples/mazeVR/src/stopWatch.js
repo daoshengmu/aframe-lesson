@@ -5,7 +5,7 @@ var StopWatch = function () {
   var reqId = null;
 
   function tick (timestamp) {
-    if (!start && timestamp) {
+    if (!start) {
       start = timestamp;
     }
 
