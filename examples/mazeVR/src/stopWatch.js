@@ -5,7 +5,7 @@ var StopWatch = function () {
   var reqId = null;
 
   function tick (timestamp) {
-    if (!start) {
+    if (!start && timestamp) {
       start = timestamp;
     }
 
@@ -22,7 +22,8 @@ var StopWatch = function () {
 
   this.init = function () {
     console.log('init');
-    reqId = window.requestAnimationFrame(tick);
+    start = null;
+    tick();
   };
 
   this.stop = function () {
