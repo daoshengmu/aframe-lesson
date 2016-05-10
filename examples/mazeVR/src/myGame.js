@@ -1,10 +1,17 @@
+var PlayState = {
+  pitch: null,
+  yaw: null
+};
 
 var MyGame = function () {
+  const bDebug = true;
+
   var score = 0;
   var bStart = false;
   var bFinish = false;
   var totalBall = 0;
   var stopWatch = null;
+  var playerState = PlayState;
 
   function ballHit (e) {
     console.log('Ball is hit......');
@@ -22,16 +29,37 @@ var MyGame = function () {
     return rad * k;
   }
 
+  function resetGame() {
+    // Main actor position
+    var camera = document.querySelector('#camera');
+    var physicsBody = camera.components['physics-body'];
+    physicsBody.body.position.copy(physicsBody.body.initPosition);
+    var look = camera.components['look-controls'];
+    look.pitchObject.rotation.copy(playerState.pitch);
+    look.yawObject.rotation.copy(playerState.yaw);
+   
+    // Respawn Enemies 
+    // (For visibily changes, we need to assign materials to entities initially.)
+    var balls = document.querySelectorAll('.enemy');
+    totalBall = balls.length;
+    for (var i = 0; i < totalBall; ++i) {
+      var ball = balls[i];
+      ball.setAttribute('visible', true);
+    }
+  }
+
   function gameStart () {
     bStart = true;
     bFinish = false;
     score = 0;
-
     var gameClearBtn = document.querySelector('#gameClearButton');
+
+    resetGame();
     gameClearBtn.setAttribute('visible', false);
 
     stopWatch = new StopWatch();
     stopWatch.init();
+
     // While game start, give hovered animation.
     var balls = document.querySelectorAll('.enemy');
     totalBall = balls.length;
@@ -66,6 +94,8 @@ var MyGame = function () {
     }
   }
 
+  var count = 0;
+
   function updateActor () {
     const actorOffsetY = 1.5;
     const lookScale = 0.6;
@@ -81,9 +111,10 @@ var MyGame = function () {
     lookAtVector.multiplyScalar(lookScale); // Add actor in front of the camera
 
     mainActor.setAttribute('rotation', { x: 0, y: radianToDegree(cameraRotate.y), z: 0 });
-    mainActor.setAttribute('position', { x: cameraPos.x + lookAtVector.x, y: cameraPos.y - actorOffsetY, z: cameraPos.z + lookAtVector.z });
+    mainActor.setAttribute('position', { x: cameraPos.x + lookAtVector.x,
+                            y: cameraPos.y - actorOffsetY, z: cameraPos.z + lookAtVector.z });
 
-    if (bStart) {
+    if (!bDebug && bStart) {
       var wasd = camera.components['wasd-physics-controls'];
       wasd.keys[87] = true; // press 'W' key;
     }
@@ -126,8 +157,8 @@ var MyGame = function () {
             break;
         }
 
-        entity.setAttribute('position', { x: cameraPos.x + lookAtVector.x + offset.x, y: cameraPos.y + offset.y,
-          z: cameraPos.z + lookAtVector.z + offset.z });
+        entity.setAttribute('position',{ x: cameraPos.x + lookAtVector.x + offset.x,
+                            y: cameraPos.y + offset.y, z: cameraPos.z + lookAtVector.z + offset.z });
       }
     }
 
@@ -146,6 +177,15 @@ var MyGame = function () {
     var mapGenerator = new MapGenerator();
     var scene = document.querySelector('a-scene');
     mapGenerator.loadMap(scene, './asset/map.json');
+
+    // Using #camera is because we adopt camera as the main actor's reference object.
+    var camera = document.querySelector('#camera');
+    var look = camera.components['look-controls'];
+    // Store initial rotate info for reseting game.
+    playerState.pitch = new THREE.Euler();
+    playerState.pitch.copy(look.pitchObject.rotation);
+    playerState.yaw = new THREE.Euler();
+    playerState.yaw.copy(look.yawObject.rotation);
 
     // Setup ball hit event
     var balls = document.querySelectorAll('.enemy');
