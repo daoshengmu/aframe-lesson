@@ -4,11 +4,13 @@
   "description": "A maze VR game based on A-Frame",
   "main": "index.html",
   "scripts": {
-    "dev": "node ./scripts/budo"
+    "dev": "node ./scripts/budo",
+    "preghpages": "rm -rf gh-pages && cp -r examples gh-pages",
+    "ghpages": "npm run preghpages && ghpages -p gh-pages"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ngokevin/aframe-text-component.git"
+    "url": "git+https://github.com/daoshengmu/aframe-lesson.git"
   },
   "keywords": [
     "aframe",
@@ -21,26 +23,24 @@
     "webvr",
     "mazevr"
   ],
-  "author": "Kevin Ngo <me@ngokevin.com>",
+  "author": "Daosheng Mu <daoshengmu@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ngokevin/aframe-text-component/issues"
+    "url": "https://github.com/daoshengmu/aframe-lesson/issues"
   },
   "homepage": "https://github.com/ngokevin/aframe-text-component#readme",
   "devDependencies": {
     "budo": "^8.1.0",
     "browserify": "^11.0.1",
-    "exorcist": "^0.4.0",
+    "ghpages": "0.0.3",
     "semistandard": "^7.0.2",
     "snazzy" : "^3.0.0",
-    "three": "^0.75.0",
-    "uglifyjs": "^2.4.10"
+    "three": "^0.75.0"
   },
   "semistandard": {
     "ignore": [
-      "build/**",
       "dist/**",
-      "examples/mazevr.js"
+      "examples/mazeVR/**"
     ]
   }
 }

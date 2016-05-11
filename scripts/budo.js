@@ -33,5 +33,5 @@ var opts = {
 
 var app = budo(consts.ENTRY, opts);
 app.on('update', function () {
- // execCmd('semistandard -v | snazzy');
+  execCmd('semistandard -v | snazzy');
 });

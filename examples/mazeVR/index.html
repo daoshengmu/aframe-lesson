@@ -29,7 +29,7 @@
         <a-mixin id="menu" geometry="primitive: plane" scale="5 2 1"></a-mixin>
         <a-mixin id="menu-hovered" material="color: #11dd22" scale="7 3 1" sound="src: asset/kick.wav; autoplay: true"></a-mixin>
       </a-assets>
-      <!-- ground -->
+      <!-- Ground -->
       <a-entity physics-body="primitive: box; boundingBox: 200 2 200; mass: 0; velocity: 0.2 0 0" geometry="primitive: box" material="color: #117777" position="0 0 0" scale="100 1 100"></a-entity>
       <a-entity id="camera" physics-body="primitive: sphere; boundingSphere: 5; mass: 10; velocity: 0.2 0 0" wasd-physics-controls camera look-controls position="0 5 2">
         <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
@@ -44,7 +44,8 @@
         <a-animation begin="hovered" attribute="visible" from="true" to="false">
         </a-animation>
       </a-entity>
-      <a-entity class="menu" id="stopWatch" scale="0.1 0.1 1" visible="true">
+      <!-- Stop watch -->
+      <a-entity class="menu" id="stopWatch" scale="0.1 0.1 1" visible="false">
         <a-entity id="min0" mixin="clock" position="-3 0 0"></a-entity>
         <a-entity id="min1" mixin="clock" position="-2 0 0"></a-entity>
         <a-entity id="sec0" mixin="clock" position="0 0 0"></a-entity>
