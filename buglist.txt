@@ -1,0 +1,15 @@
+
+1..getAttribute("look-controls");//camera.components['look-controls']; //.getAttribute("look-controls"); // It doesn't work at aframe-core. Have a look at aframe.
+2. In fullscreen, the background would be black.
+3. No fullscreen filter on iOS and Android. iOS can't trigger fullscreen.
+4. On Fennec Nightly, fullscreen will make background to be black.
+5. Why physics component need to combine with aframe not aframe-core. https://github.com/ngokevin/aframe-physics-components. What is the difference btw dist/aframe-physics-component.js and aframe-physics-components.js. Moreover, I need to delete the line of (function webpackMissingModule() { var e = new Error("Cannot find module \"../package.json\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) at version :                       __webpack_require__
+6. aframe-text has a bug while updating text. this.el.getOrCreateObject3D('mesh', THREE.Mesh).geometry = getTextGeometry((oldData)?oldData:this.data);
+7. A-frame needs to support sprite render in orthogonal projection.
+8. Performance - 
+	- Using stats 
+	- Watch out face no.
+	- Disalbe sky sphere
+
+browser.cache.memory.enable  
+browser.cache.disk.enable;false
