@@ -4,7 +4,7 @@ var PlayState = {
 };
 
 var MyGame = function () {
-  const bDebug = true;
+  const bDebug = false;
 
   var score = 0;
   var bStart = false;
