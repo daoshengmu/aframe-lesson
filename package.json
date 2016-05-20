@@ -39,8 +39,10 @@
   },
   "semistandard": {
     "ignore": [
-      "dist/**",
-      "examples/mazeVR/**"
+      "examples/dist/**",
+      "examples/mazeVR/**",
+      "gh-pages/**",
+      "pages/**"
     ]
   }
 }

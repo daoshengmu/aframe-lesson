@@ -57,7 +57,7 @@ var StopWatch = function () {
     var items = stopWatchItem.children;
     var elapsedTime = this.getFormatedElapsedTime();
 
-    // mm mm:ss ss:ms ms ms
+    // Display as-> mm mm:ss ss:ms ms ms
     var t = 0;
     var newTexCoord = null;
     var geometry = null;

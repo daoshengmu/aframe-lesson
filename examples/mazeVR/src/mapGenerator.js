@@ -2,8 +2,6 @@
 var MapGenerator = function () {
   var mapScene = null;
   function loadJSON (url) {
-    /*global XMLHttpRequest*/
-    /* no-undef in eslint */
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType('application/json');
     xobj.open('GET', url, true);

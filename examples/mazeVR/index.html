@@ -11,7 +11,8 @@
     <script src="src/myGame.js"></script>
   </head>
   <body>
-    <a-scene stats physics-world="gravity: 0 -9.8 0; debug: false">
+    <!--  // Note:: add stats at a-scene for profiling -->
+    <a-scene physics-world="gravity: 0 -9.8 0; debug: false">
       <a-assets>
         <!-- Image assets -->
         <img id="playBtnTexture" src="asset/gameStart.png">
@@ -21,7 +22,7 @@
         <a-mixin id="red" material="color: #AA5544"></a-mixin>
         <a-mixin id="green" material="color: #33AA44"></a-mixin>
         <a-mixin id="blue" material="color: #4433AA"></a-mixin>
-        <!--           -->
+        <!--  // Note: cube-hovered. '-' means state.-->
         <a-mixin id="clock" geometry="primitive: plane" visible="true" material="transparent: true; src: #stopWatchTexture"></a-mixin>
         <a-mixin id="sphere" geometry="primitive: sphere; segmentsWidth: 4; segmentsHeight: 4" scale="1 1 1"></a-mixin>
         <a-mixin id="sphere-hovered" material="color: yellow; transparent: true; opacity: 0.5" scale="2 2 2" sound="src: asset/hit.wav; autoplay: true">
@@ -31,14 +32,6 @@
       </a-assets>
       <!-- Ground -->
       <a-entity physics-body="primitive: box; boundingBox: 200 2 200; mass: 0; velocity: 0.2 0 0" geometry="primitive: box" material="color: #117777" position="0 0 0" scale="100 1 100"></a-entity>
-      <a-entity id="camera" physics-body="primitive: sphere; boundingSphere: 5; mass: 10; velocity: 0.2 0 0" wasd-physics-controls camera look-controls position="0 5 2">
-        <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
-          position="0 0 -5"
-          geometry="primitive: ring; segmentsTheta: 8; segmentsPhi: 2"
-          material="color: #4CC3D9; shader: flat"
-          scale="0.1, 0.1, 0.1">
-        </a-entity>
-      </a-entity>
       <!-- GUI menu -->
       <a-entity class="menu" id="playButton" mixin="menu" material="transparent: true; src: #playBtnTexture"scale="0.4 0.2 1" visible="true">
         <a-animation begin="hovered" attribute="visible" from="true" to="false">
@@ -56,8 +49,17 @@
       </a-entity>
       <a-entity class="menu" id="gameClearButton" geometry="primitive: plane" scale="0.8 0.4 1" visible="false" material="transparent: true; src: #gameClearBtnTexture">
       </a-entity>
+      <!-- Camera -->
+      <a-entity id="camera" physics-body="primitive: sphere; boundingSphere: 5; mass: 10; velocity: 0.2 0 0" wasd-physics-controls camera look-controls position="0 5 2">
+        <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
+          position="0 0 -5"
+          geometry="primitive: ring; segmentsTheta: 8; segmentsPhi: 2"
+          material="color: #4CC3D9; shader: flat"
+          scale="0.1, 0.1, 0.1">
+        </a-entity>
+      </a-entity>
       <!-- Main actor: Vehicle -->
-      <a-entity id="vehicle" wasd-controls="acceleration: 100">
+      <a-entity id="vehicle">
         <a-entity geometry="primitive: box; depth: 3; height: 1; width: 1" material="color: #AAAA44"></a-entity>
         <a-entity mixin="sphere" material="color: #999999" position="-0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
         <a-entity mixin="sphere" material="color: #999999" position="0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
@@ -93,6 +95,7 @@
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="600"></a-animation>
       </a-entity>
+      <!-- Sky -->
       <a-sky segments-height="1" segments-width="1" color="#777777"></a-sky>
     </a-scene>
   </body>
@@ -101,7 +104,6 @@
 var myGame = null;
 
 function init() {
-  // // Note: cube-hovered. '-' means state.
   myGame = new MyGame();
   myGame.init();
 
