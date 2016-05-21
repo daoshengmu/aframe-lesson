@@ -38,7 +38,7 @@
         </a-animation>
       </a-entity>
       <!-- Stop watch -->
-      <a-entity class="menu" id="stopWatch" scale="0.1 0.1 1" visible="true">
+      <a-entity class="menu" id="stopWatch" scale="0.1 0.1 1" visible="false">
         <a-entity id="min0" mixin="clock" position="-3 0 0"></a-entity>
         <a-entity id="min1" mixin="clock" position="-2 0 0"></a-entity>
         <a-entity id="sec0" mixin="clock" position="0 0 0"></a-entity>
@@ -47,7 +47,7 @@
         <a-entity id="msec1" mixin="clock" position="4 0 0"></a-entity>
         <a-entity id="msec3" mixin="clock" position="5 0 0"></a-entity>
       </a-entity>
-      <a-entity class="menu" id="gameClearButton" geometry="primitive: plane" scale="0.8 0.4 1" visible="true" material="transparent: true; src: #gameClearBtnTexture">
+      <a-entity class="menu" id="gameClearButton" geometry="primitive: plane" scale="0.8 0.4 1" visible="false" material="transparent: true; src: #gameClearBtnTexture">
       </a-entity>
       <!-- Camera -->
       <a-entity id="camera" physics-body="primitive: sphere; boundingSphere: 5; mass: 10; velocity: 0.2 0 0" wasd-physics-controls camera look-controls position="0 5 2">
