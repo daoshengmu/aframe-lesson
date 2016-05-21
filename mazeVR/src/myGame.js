@@ -1,3 +1,4 @@
+
 var PlayState = {
   pitch: null,
   yaw: null
@@ -18,7 +19,7 @@ var MyGame = function () {
     score += 100;
 
     if (score === totalBall * 100) {
-      bStart = false; // Finish the game.
+      bStart = false; // Game is finished.
       bFinish = true;
       console.log('Game is finished...');
     }
@@ -39,7 +40,7 @@ var MyGame = function () {
     look.yawObject.rotation.copy(playerState.yaw);
    
     // Respawn Enemies 
-    // (For visibily changes, we need to assign materials to entities initially.)
+    // (For visibility changes, we need to assign materials to entities initially.)
     var balls = document.querySelectorAll('.enemy');
     totalBall = balls.length;
     for (var i = 0; i < totalBall; ++i) {
@@ -53,9 +54,11 @@ var MyGame = function () {
     bFinish = false;
     score = 0;
     var gameClearBtn = document.querySelector('#gameClearButton');
+    var stopWatchItem = document.querySelector('#stopWatch');
 
     resetGame();
     gameClearBtn.setAttribute('visible', false);
+    stopWatchItem.setAttribute('visible', false);
 
     stopWatch = new StopWatch();
     stopWatch.init();
@@ -74,7 +77,6 @@ var MyGame = function () {
     var gameClearBtn = document.querySelector('#gameClearButton');
     var stopWatchItem = document.querySelector('#stopWatch');
 
-    console.log('gameStop');
     if (stopWatch) {
       stopWatch.stop();
     }
@@ -94,8 +96,6 @@ var MyGame = function () {
     }
   }
 
-  var count = 0;
-
   function updateActor () {
     const actorOffsetY = 1.5;
     const lookScale = 0.6;
@@ -103,13 +103,11 @@ var MyGame = function () {
     var camera = document.querySelector('#camera');
     var cameraPos = camera.object3D.position;
     var cameraRotate = camera.object3D.rotation;
-
-    // 1..getAttribute("look-controls");//camera.components['look-controls']; //.getAttribute("look-controls"); // It doesn't work at aframe-core. Have a look at aframe.
-    // 2. In fullscreen, the background would be black.
     var cameraMtx = camera.object3D.matrix.elements;
     var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
-    lookAtVector.multiplyScalar(lookScale); // Add actor in front of the camera
+    lookAtVector.multiplyScalar(lookScale);
 
+    // Put actor in front of the camera
     mainActor.setAttribute('rotation', { x: 0, y: radianToDegree(cameraRotate.y), z: 0 });
     mainActor.setAttribute('position', { x: cameraPos.x + lookAtVector.x,
                             y: cameraPos.y - actorOffsetY, z: cameraPos.z + lookAtVector.z });
@@ -137,8 +135,8 @@ var MyGame = function () {
       var entity = menus[i];
 
       if (entity.getAttribute('visible')) {
-        // Update transform
-        // Make face to the camera
+        // Update GUI transform
+        // Make GUI face to the camera
         entity.setAttribute('rotation', { x: radianToDegree(cameraRotate.x),
           y: radianToDegree(cameraRotate.y), z: radianToDegree(cameraRotate.z) });
 
@@ -181,13 +179,13 @@ var MyGame = function () {
     // Using #camera is because we adopt camera as the main actor's reference object.
     var camera = document.querySelector('#camera');
     var look = camera.components['look-controls'];
-    // Store initial rotate info for reseting game.
+    // Store initial rotation info for reseting game.
     playerState.pitch = new THREE.Euler();
     playerState.pitch.copy(look.pitchObject.rotation);
     playerState.yaw = new THREE.Euler();
     playerState.yaw.copy(look.yawObject.rotation);
 
-    // Setup ball hit event
+    // Setup hit event to balls
     var balls = document.querySelectorAll('.enemy');
     totalBall = balls.length;
 
