@@ -176,6 +176,13 @@ var MyGame = function () {
     var scene = document.querySelector('a-scene');
     mapGenerator.loadMap(scene, './asset/map.json');
 
+    // At http connection, we sometimes would not finish loading before rendering.
+    // We need to make sure these GUI assets be downloaded first.
+    var gameClearBtn = document.querySelector('#gameClearButton');
+    var stopWatchItem = document.querySelector('#stopWatch');
+    gameClearBtn.setAttribute('visible', false);
+    stopWatchItem.setAttribute('visible', false);
+
     // Using #camera is because we adopt camera as the main actor's reference object.
     var camera = document.querySelector('#camera');
     var look = camera.components['look-controls'];
