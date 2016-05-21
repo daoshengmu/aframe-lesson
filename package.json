@@ -41,6 +41,7 @@
     "ignore": [
       "examples/dist/**",
       "examples/mazeVR/**",
+      "examples/basicScene/**",
       "gh-pages/**",
       "pages/**"
     ]
