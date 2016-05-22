@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/daoshengmu/aframe-lesson/issues"
   },
-  "homepage": "https://github.com/ngokevin/aframe-text-component#readme",
+  "homepage": "https://github.com/daoshengmu/aframe-lesson#readme",
   "devDependencies": {
     "budo": "^8.1.0",
     "browserify": "^11.0.1",
