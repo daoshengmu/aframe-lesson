@@ -8,6 +8,8 @@ http://daoshengmu.github.io/aframe-lesson/basicScene/
 ### Maze VR
 http://daoshengmu.github.io/aframe-lesson/mazeVR/
 
+[Slide Link](http://www.slideshare.net/ellisonmu/maze-vr)
+
 #Installation and Development
 
 	git clone git@github.com:daoshengmu/aframe-lesson.git
