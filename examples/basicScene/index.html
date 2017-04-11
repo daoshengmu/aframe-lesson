@@ -17,7 +17,7 @@
         <a-mixin id="sphere" geometry="primitive: sphere; segmentsWidth: 4; segmentsHeight: 4" scale="1 1 1"></a-mixin>
       </a-assets>
       <!-- Ground -->
-      <a-entity physics-body="primitive: box; boundingBox: 200 2 200; mass: 0; velocity: 0.2 0 0" geometry="primitive: box" material="color: #117777" position="0 0 0" scale="100 1 100"></a-entity>
+      <a-entity physics-body="primitive: box; boundingBox: 200 2 200; mass: 0; velocity: 0.2 0 0" geometry="primitive: box" material="color: #117777; shader: flat" position="0 0 0" scale="100 1 100"></a-entity>
       <!-- Camera -->
       <a-entity id="camera" physics-body="primitive: sphere; boundingSphere: 5; mass: 10; velocity: 0.2 0 0" wasd-physics-controls camera look-controls position="0 5 2">
         <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
@@ -29,11 +29,11 @@
       </a-entity>
       <!-- Main actor: Vehicle -->
       <a-entity id="vehicle">
-        <a-entity geometry="primitive: box; depth: 3; height: 1; width: 1" material="color: #AAAA44"></a-entity>
-        <a-entity mixin="sphere" material="color: #999999" position="-0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
-        <a-entity mixin="sphere" material="color: #999999" position="0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
-        <a-entity mixin="sphere" material="color: #999999" position="-0.7 -0.5 -1.5" scale="0.3 0.3 0.3"></a-entity>
-        <a-entity mixin="sphere" material="color: #999999" position="0.7 -0.5 -1.5" scale="0.3 0.3 0.3"></a-entity>
+        <a-entity geometry="primitive: box; depth: 3; height: 1; width: 1" material="color: #AAAA44; shader: flat"></a-entity>
+        <a-entity mixin="sphere" material="color: #999999; shader: flat" position="-0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
+        <a-entity mixin="sphere" material="color: #999999; shader: flat" position="0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
+        <a-entity mixin="sphere" material="color: #999999; shader: flat" position="-0.7 -0.5 -1.5" scale="0.3 0.3 0.3"></a-entity>
+        <a-entity mixin="sphere" material="color: #999999; shader: flat" position="0.7 -0.5 -1.5" scale="0.3 0.3 0.3"></a-entity>
       </a-entity>
       <!-- Sky -->
       <a-sky segments-height="1" segments-width="1" color="#777777"></a-sky>
