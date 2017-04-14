@@ -1,6 +1,6 @@
 {
   "name": "mazeVR",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A maze VR game based on A-Frame",
   "main": "index.html",
   "scripts": {
@@ -32,7 +32,7 @@
   "devDependencies": {
     "budo": "^8.1.0",
     "browserify": "^11.0.1",
-    "ghpages": "0.0.3",
+    "ghpages": "^0.0.5",
     "semistandard": "^7.0.2",
     "snazzy" : "^3.0.0",
     "three": "^0.75.0"
