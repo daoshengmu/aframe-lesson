@@ -10,7 +10,24 @@ http://daoshengmu.github.io/aframe-lesson/mazeVR/
 
 [Slide Link](http://www.slideshare.net/ellisonmu/maze-vr)
 
-#Installation and Development
+### Motion Tracker
+http://daoshengmu.github.io/aframe-lesson/motionTracker/
+
+Using **query parameter**
+
+http://daoshengmu.github.io/aframe-lesson/motionTracker/?avatar-recording=assets/recording-motion-tracker.json
+
+**Keyboard Shortcuts**
+
+| Key     | Description                                      |
+| ------- | ----------------------------------------------   |
+| space   | Toggle recording.                                |
+| c       | Clear recording from localStorage and memory.    |
+| u       | Upload recording to file host and get short URL. |
+
+[More info](https://github.com/dmarcos/aframe-motion-capture-components)
+
+## Installation and Development
 
 	git clone git@github.com:daoshengmu/aframe-lesson.git
 	cd aframe-lesson && npm install
