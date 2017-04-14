@@ -27,7 +27,7 @@ var MapGenerator = function () {
     e.setAttribute('rotation', {x: entity.rotation[0],
                                 y: entity.rotation[1],
                                 z: entity.rotation[2]});
-    e.setAttribute('material', {color: entity.material.color});
+    e.setAttribute('material', {color: entity.material.color, shader: `flat`});
 
     e.setAttribute('physics-body', 'boundingBox', {x: entity.scale[0], y: entity.scale[1], z: entity.scale[2]});
     e.setAttribute('physics-body', 'mass', 0);

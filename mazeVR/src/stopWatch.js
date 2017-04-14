@@ -13,13 +13,6 @@ var StopWatch = function () {
     reqId = window.requestAnimationFrame(tick);
   }
 
-  function getTexCoord (num) {
-    var offset = num * 0.1;
-
-    return new Float32Array(
-      [ offset, 1, offset + 0.1, 1, offset, 0, offset + 0.1, 0 ]);
-  }
-
   this.init = function () {
     console.log('init');
     start = null;
@@ -59,8 +52,6 @@ var StopWatch = function () {
 
     // Display as-> mm mm:ss ss:ms ms ms
     var t = 0;
-    var newTexCoord = null;
-    var geometry = null;
     var item = null;
     var t0, t1, t2, t3, t4, t5, t6;
 
@@ -97,9 +88,10 @@ var StopWatch = function () {
       }
 
       item = items['' + i];
-      newTexCoord = getTexCoord(t);
-      geometry = item.object3DMap.mesh.geometry;
-      geometry.addAttribute('uv', new THREE.BufferAttribute(newTexCoord, 2));
+      // texture offset can't be updated in real-time, and the map in three.js object will be equal
+      // while the src are the same. So, I separate them to different images.
+      var material = item.object3DMap.mesh.material;
+      material.map.offset.x = t * 0.1;
     }
   };
 };

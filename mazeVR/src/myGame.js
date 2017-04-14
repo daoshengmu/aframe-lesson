@@ -59,7 +59,6 @@ var MyGame = function () {
     resetGame();
     gameClearBtn.setAttribute('visible', false);
     stopWatchItem.setAttribute('visible', false);
-
     stopWatch = new StopWatch();
     stopWatch.init();
 
@@ -68,7 +67,15 @@ var MyGame = function () {
     totalBall = balls.length;
     for (var i = 0; i < totalBall; ++i) {
       var ball = balls[i];
-      ball.lastElementChild.data.begin = 'hovered';
+      var originMixin = ball.getAttribute('mixin');
+
+      ball.lastElementChild.data.begin = 'cursor-hovered';
+      ball.addEventListener('mouseenter', function (evt) {
+        this.setAttribute('mixin', 'sphere sphere-hovered');
+      });
+      ball.addEventListener('mouseleave', function (evt) {
+        this.setAttribute('mixin', originMixin);
+      });
     }
   }
 
@@ -119,17 +126,14 @@ var MyGame = function () {
   }
 
   function updateGUI () {
-    const offsetPlayBtn = new THREE.Vector3(0, 0.2, 0);
-    const offsetStopWatch = new THREE.Vector3(-0.1, -0.2, 0);
-    const offsetGameClear = new THREE.Vector3(0, 0.0, 0);
+    var offsetPlayBtn = new THREE.Vector3(0.0, 2.0, -10.0);
+    var offsetStopWatch = new THREE.Vector3(-1.0, -2.0, -10.0);
+    var offsetGameClear = new THREE.Vector3(0.0, 0.0, -10.0);
     var menus = document.querySelectorAll('.menu');
     var camera = document.querySelector('#camera').object3D;
     var cameraPos = camera.position;
     var cameraRotate = camera.rotation;
-    var cameraMtx = camera.matrix.elements;
     var offset = null;
-    var lookAtVector = new THREE.Vector3(-cameraMtx[8], -cameraMtx[9], -cameraMtx[10]);
-    lookAtVector.multiplyScalar(1.0);
 
     for (var i = 0; i < menus.length; ++i) {
       var entity = menus[i];
@@ -142,21 +146,27 @@ var MyGame = function () {
 
         switch (entity.id) {
           case 'playButton':
+            offsetPlayBtn.applyQuaternion(camera.quaternion);
             offset = offsetPlayBtn;
+            offset.y = 3.0;
             break;
           case 'stopWatch':
+            offsetStopWatch.applyQuaternion(camera.quaternion);
             offset = offsetStopWatch;
+            offset.y = 0.0;
             break;
           case 'gameClearButton':
+            offsetGameClear.applyQuaternion(camera.quaternion);
             offset = offsetGameClear;
+            offset.y = 5.0;
             break;
           default:
-            console.log('This gui type is undefined ' + entity.id);
+            console.error('This gui type is undefined ' + entity.id);
             break;
         }
 
-        entity.setAttribute('position',{ x: cameraPos.x + lookAtVector.x + offset.x,
-                            y: cameraPos.y + offset.y, z: cameraPos.z + lookAtVector.z + offset.z });
+        entity.setAttribute('position', { x: cameraPos.x + offset.x,
+                            y: cameraPos.y + offset.y, z: cameraPos.z + offset.z });
       }
     }
 

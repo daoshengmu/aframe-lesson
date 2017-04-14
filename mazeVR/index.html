@@ -17,41 +17,41 @@
         <!-- Image assets -->
         <img id="playBtnTexture" src="asset/gameStart.png">
         <img id="gameClearBtnTexture" src="asset/gameClear.png">
-        <img id="stopWatchTexture" src="asset/numStrip.png">
         <!-- Material color -->
-        <a-mixin id="red" material="color: #AA5544"></a-mixin>
-        <a-mixin id="green" material="color: #33AA44"></a-mixin>
-        <a-mixin id="blue" material="color: #4433AA"></a-mixin>
-        <!--  // Note: cube-hovered. '-' means state.-->
-        <a-mixin id="clock" geometry="primitive: plane" visible="true" material="transparent: true; src: #stopWatchTexture"></a-mixin>
+        <a-mixin id="red" material="color: #AA5544; shader: flat"></a-mixin>
+        <a-mixin id="green" material="color: #33AA44; shader: flat"></a-mixin>
+        <a-mixin id="blue" material="color: #4433AA; shader: flat"></a-mixin>
+        <a-mixin id="clock" geometry="primitive: plane" visible="true" material="transparent: true; shader: flat; repeat: 0.1 1; offset: 0 0"></a-mixin>
         <a-mixin id="sphere" geometry="primitive: sphere; segmentsWidth: 4; segmentsHeight: 4" scale="1 1 1"></a-mixin>
-        <a-mixin id="sphere-hovered" material="color: yellow; transparent: true; opacity: 0.5" scale="2 2 2" sound="src: asset/hit.wav; autoplay: true">
+        <a-mixin id="sphere-hovered" material="color: yellow; shader: flat; transparent: true; opacity: 0.5" scale="2 2 2" sound="src: url(asset/hit.wav); autoplay: true">
         </a-mixin>
-        <a-mixin id="menu" geometry="primitive: plane" scale="5 2 1"></a-mixin>
-        <a-mixin id="menu-hovered" material="color: #11dd22" scale="7 3 1" sound="src: asset/kick.wav; autoplay: true"></a-mixin>
+        <a-mixin id="menu" geometry="primitive: plane" material="shader: flat" scale="5 2 1"></a-mixin>
+        <a-mixin id="menu-hovered" material="color: #11dd22; shader: flat" scale="7 3 1" sound="src: url(asset/kick.wav); autoplay: true"></a-mixin>
       </a-assets>
       <!-- Ground -->
-      <a-entity physics-body="primitive: box; boundingBox: 200 2 200; mass: 0; velocity: 0.2 0 0" geometry="primitive: box" material="color: #117777" position="0 0 0" scale="100 1 100"></a-entity>
+      <a-entity physics-body="primitive: box; boundingBox: 200 2 200; mass: 0; velocity: 0.2 0 0" geometry="primitive: box" material="color: #117777; shader: flat" position="0 0 0" scale="100 1 100"></a-entity>
       <!-- GUI menu -->
-      <a-entity class="menu" id="playButton" mixin="menu" material="transparent: true; src: #playBtnTexture"scale="0.4 0.2 1" visible="true">
-        <a-animation begin="hovered" attribute="visible" from="true" to="false">
+      <a-entity class="menu intersectable" id="playButton" mixin="menu" material="transparent: true; src: #playBtnTexture" scale="4 2 1" visible="true">
+        <a-animation begin="cursor-hovered" attribute="visible" from="true" to="false">
         </a-animation>
       </a-entity>
       <!-- Stop watch -->
-      <a-entity class="menu" id="stopWatch" scale="0.1 0.1 1" visible="false">
-        <a-entity id="min0" mixin="clock" position="-3 0 0"></a-entity>
-        <a-entity id="min1" mixin="clock" position="-2 0 0"></a-entity>
-        <a-entity id="sec0" mixin="clock" position="0 0 0"></a-entity>
-        <a-entity id="sec1" mixin="clock" position="1 0 0"></a-entity>
-        <a-entity id="msec0" mixin="clock" position="3 0 0"></a-entity>
-        <a-entity id="msec1" mixin="clock" position="4 0 0"></a-entity>
-        <a-entity id="msec3" mixin="clock" position="5 0 0"></a-entity>
+      <!-- texture offset can't be updated in real-time, and the map in three.js object will be equal
+      while the src are the same. So, I separate them to different images. -->
+      <a-entity class="menu" id="stopWatch" scale="1 1 1" visible="false">
+        <a-entity id="min0" mixin="clock" position="-3 0 0" material="src: url(asset/numStrip0.png)"></a-entity>
+        <a-entity id="min1" mixin="clock" position="-2 0 0" material="src: url(asset/numStrip1.png)"></a-entity>
+        <a-entity id="sec0" mixin="clock" position="0 0 0" material="src: url(asset/numStrip2.png)"></a-entity>
+        <a-entity id="sec1" mixin="clock" position="1 0 0" material="src: url(asset/numStrip3.png)"></a-entity>
+        <a-entity id="msec0" mixin="clock" position="3 0 0" material="src: url(asset/numStrip4.png)"></a-entity>
+        <a-entity id="msec1" mixin="clock" position="4 0 0" material="src: url(asset/numStrip5.png)"></a-entity>
+        <a-entity id="msec3" mixin="clock" position="5 0 0" material="src: url(asset/numStrip6.png)"></a-entity>
       </a-entity>
-      <a-entity class="menu" id="gameClearButton" geometry="primitive: plane" scale="0.8 0.4 1" visible="false" material="transparent: true; src: #gameClearBtnTexture">
+      <a-entity class="menu" id="gameClearButton" mixin="menu" geometry="primitive: plane" scale="8 4 1" visible="false" material="transparent: true; src: #gameClearBtnTexture">
       </a-entity>
       <!-- Camera -->
       <a-entity id="camera" physics-body="primitive: sphere; boundingSphere: 5; mass: 10; velocity: 0.2 0 0" wasd-physics-controls camera look-controls position="0 5 2">
-        <a-entity id="cursor" cursor="fuse: false; maxDistance: 30; timeout: 500"
+        <a-entity id="cursor" raycaster="far: 30; objects: .intersectable" cursor="fuse: false;"
           position="0 0 -5"
           geometry="primitive: ring; segmentsTheta: 8; segmentsPhi: 2"
           material="color: #4CC3D9; shader: flat"
@@ -60,41 +60,41 @@
       </a-entity>
       <!-- Main actor: Vehicle -->
       <a-entity id="vehicle">
-        <a-entity geometry="primitive: box; depth: 3; height: 1; width: 1" material="color: #AAAA44"></a-entity>
-        <a-entity mixin="sphere" material="color: #999999" position="-0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
-        <a-entity mixin="sphere" material="color: #999999" position="0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
-        <a-entity mixin="sphere" material="color: #999999" position="-0.7 -0.5 -1.5" scale="0.3 0.3 0.3"></a-entity>
-        <a-entity mixin="sphere" material="color: #999999" position="0.7 -0.5 -1.5" scale="0.3 0.3 0.3"></a-entity>
+        <a-entity geometry="primitive: box; depth: 3; height: 1; width: 1" material="color: #AAAA44; shader: flat"></a-entity>
+        <a-entity mixin="sphere" material="color: #999999; shader: flat" position="-0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
+        <a-entity mixin="sphere" material="color: #999999; shader: flat" position="0.7 -0.5 1.5" scale="0.3 0.3 0.3"></a-entity>
+        <a-entity mixin="sphere" material="color: #999999; shader: flat" position="-0.7 -0.5 -1.5" scale="0.3 0.3 0.3"></a-entity>
+        <a-entity mixin="sphere" material="color: #999999; shader: flat" position="0.7 -0.5 -1.5" scale="0.3 0.3 0.3"></a-entity>
       </a-entity>
       <!-- Enemies -->
-      <a-entity class='enemy' mixin="sphere blue" position="-3.5 5 -17">
+      <a-entity class="enemy intersectable" mixin="sphere blue" position="-3.5 5 -17">
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="600"></a-animation>
       </a-entity>
-      <a-entity class='enemy' mixin="sphere red" position="10 10 -13">
+      <a-entity class="enemy intersectable" mixin="sphere red" position="10 10 -13">
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="600"></a-animation>
       </a-entity>
-      <a-entity class='enemy' mixin="sphere green" position="-23 6 -15">
+      <a-entity class="enemy intersectable" mixin="sphere green" position="-23 6 -15">
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="600"></a-animation>
       </a-entity>
-      <a-entity class='enemy' mixin="sphere blue" position="-3.5 7 20">
+      <a-entity class="enemy intersectable" mixin="sphere blue" position="-3.5 7 20">
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="600"></a-animation>
       </a-entity>
-      <a-entity class='enemy' mixin="sphere green" position="23 3 15">
+      <a-entity class="enemy intersectable" mixin="sphere green" position="23 3 15">
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="600"></a-animation>
       </a-entity>
-      <a-entity class='enemy' mixin="sphere green" position="-25 6 40">
+      <a-entity class="enemy intersectable" mixin="sphere green" position="-25 6 40">
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="600"></a-animation>
       </a-entity>
-      <a-entity class='enemy' mixin="sphere blue" position="20 7 -40">
+      <a-entity class="enemy intersectable" mixin="sphere blue" position="20 7 -40">
         <a-animation begin="wait" attribute="visible" from="true"
                        to="false" dur="600"></a-animation>
-      </a-entity>
+      </a-entity> 
       <!-- Sky -->
       <a-sky segments-height="1" segments-width="1" color="#777777"></a-sky>
     </a-scene>
