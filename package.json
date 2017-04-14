@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node ./scripts/budo",
     "preghpages": "rm -rf gh-pages && cp -r examples/ gh-pages && cp -r pages/ gh-pages",
-    "ghpages": "npm run preghpages && ghpages -p gh-pages"
+    "ghpages": "npm run preghpages && ghpages -p gh-pages && rm -rf gh-pages"
   },
   "repository": {
     "type": "git",
